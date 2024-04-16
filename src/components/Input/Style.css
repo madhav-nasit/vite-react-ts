@@ -1,0 +1,27 @@
+.input-container {
+    position: relative;
+    margin: 0px 0px 16px 0px;
+}
+
+.input-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 42px;
+    box-sizing: border-box;
+}
+
+.errror-input {
+    border: 1px solid var(--error) !important;
+}
+
+.error-message {
+    color: var(--error);
+    font-size: 10px;
+    line-height: 1.2;
+    margin-top: 2px;
+}
