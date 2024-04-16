@@ -276,7 +276,44 @@ function App() {
   const renderUserDetails = () => (
     <div id='detail-view'>
       <h4>User List:</h4>
-      <table id='user-list'>{/* <!-- User data will be displayed here --> */}</table>
+      {users.length > 0 ? (
+        <table id='user-list'>
+          <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Birthday</th>
+            <th>State</th>
+            <th>Gender</th>
+            <th>Hobbies</th>
+            <th>Actions</th>
+          </tr>
+          {users.map((user, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{`${user.fname} ${user.lname}`}</td>
+              <td>{user.email}</td>
+              <td>{user.dob}</td>
+              <td>{user.state}</td>
+              <td>{user.gender}</td>
+              <td>{user.hobbies.join(', ')}</td>
+              <td>
+                <div className='user-buttons'>
+                  <button className='edit' onClick={() => editUser('${user.id}')}>
+                    Edit
+                  </button>
+                  <div className='horizontal-input-spacer'></div>
+                  <button className='delete' onClick={() => deleteUser('${user.id}')}>
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </table>
+      ) : (
+        <p>No user data found!</p>
+      )}
     </div>
   );
 

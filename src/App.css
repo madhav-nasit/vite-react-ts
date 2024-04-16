@@ -46,6 +46,87 @@
   min-width: 160px;
 }
 
+/* Data view styles starts here */
+.user-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+
+#user-list {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#user-list td,
+#user-list th {
+  border: 1px solid var(--border);
+  padding: 8px;
+}
+
+#user-list tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#user-list tr:hover {
+  background-color: #ddd;
+}
+
+#user-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--primary);
+  color: var(--text-dark);
+}
+
+.user-card:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.user-details {
+  margin-bottom: 16px;
+}
+
+.user-details p {
+  margin: 5px 0;
+}
+
+.user-details span {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.user-buttons {
+  display: flex;
+}
+
+.user-buttons button {
+  min-width: auto;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-buttons button.edit {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.user-buttons button.delete {
+  background-color: var(--error);
+  color: #fff;
+}
+
+
+/* Data view styles ends here */
+
+/* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 
   /* main styles starts here */
@@ -72,6 +153,17 @@
   }
 
   /* main styles ends here */
+
+  /* Data view styles starts here */
+  .user-buttons {
+    flex-direction: column;
+  }
+
+  .user-buttons .edit {
+    margin-bottom: 16px;
+  }
+
+  /* Data view styles ends here */
 }
 
 /* Medium devices (landscape tablets, 601px to 768px) */
