@@ -37,6 +37,7 @@ interface Users {
 function App() {
   const [isTouched, setIsTouched] = useState(false);
   const [users, setUsers] = useState<Users[]>([]);
+  const [editId, setEditId] = useState<string | undefined>();
   // Input states
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -85,6 +86,7 @@ function App() {
     setStateError('');
     setPasswordError('');
     setConfirmPasswordError('');
+    setEditId(undefined);
   };
 
   const validateForm = () => {
@@ -121,26 +123,62 @@ function App() {
     try {
       setIsTouched(true);
       const isFormValid = validateForm();
-      showSuccessToast('User details added successfully.');
       if (isFormValid) {
         resetForm();
-        setUsers([
-          ...users,
-          {
-            id: generateUniqueId(),
-            fname,
-            lname,
-            email,
-            dob,
-            state,
-            gender,
-            hobbies,
-            password,
-            confirmPassword,
-          },
-        ]);
+        const updatedUser = {
+          id: editId ? editId : generateUniqueId(),
+          fname,
+          lname,
+          email,
+          dob,
+          state,
+          gender,
+          hobbies,
+          password,
+          confirmPassword,
+        };
+        if (!!editId) {
+          showSuccessToast('User details edited successfully.');
+          setUsers((prevUsers) => {
+            // Find the index of the user with the given ID
+            const index = prevUsers.findIndex((user) => user.id === editId);
+            if (index !== -1) {
+              // Create a new array with the updated user at the found index
+              const updatedUsers = [...prevUsers];
+              updatedUsers[index] = { ...updatedUser };
+              return updatedUsers;
+            } else {
+              // If user with given ID is not found, return the previous state
+              return prevUsers;
+            }
+          });
+        } else {
+          showSuccessToast('User details added successfully.');
+          setUsers([...users, updatedUser]);
+        }
       }
     } catch (error) {}
+  };
+
+  const deleteUser = (userId: string) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this user?');
+    if (confirmDelete) {
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      showSuccessToast('User deleted successfully.');
+    }
+  };
+
+  const editUser = (user: Users) => {
+    setEditId(user.id);
+    setFname(user.fname);
+    setLname(user.lname);
+    setEmail(user.email);
+    setDob(user.dob);
+    setState(user.state);
+    setGender(user.gender);
+    setHobbies(user.hobbies);
+    setPassword(user.password);
+    setConfirmPassword(user.confirmPassword);
   };
 
   const renderForm = () => (
@@ -299,11 +337,11 @@ function App() {
               <td>{user.hobbies.join(', ')}</td>
               <td>
                 <div className='user-buttons'>
-                  <button className='edit' onClick={() => editUser('${user.id}')}>
+                  <button className='edit' onClick={() => editUser(user)}>
                     Edit
                   </button>
                   <div className='horizontal-input-spacer'></div>
-                  <button className='delete' onClick={() => deleteUser('${user.id}')}>
+                  <button className='delete' onClick={() => deleteUser(user.id)}>
                     Delete
                   </button>
                 </div>
