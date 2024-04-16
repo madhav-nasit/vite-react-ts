@@ -28,7 +28,7 @@ export const Select = (props: StateSelectProps) => {
         )}
         <select
           type='select'
-          className={!!error ? 'errror-input' : ''}
+          className={!!error ? 'error-input' : ''}
           id={id}
           name={id}
           required={required}

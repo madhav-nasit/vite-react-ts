@@ -15,7 +15,7 @@
     box-sizing: border-box;
 }
 
-.errror-input {
+.error-input {
     border: 1px solid var(--error) !important;
 }
 

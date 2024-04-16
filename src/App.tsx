@@ -1,3 +1,8 @@
+/**
+ * Importing necessary dependencies and components.
+ */
+import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import {
   faCalendar,
   faEnvelope,
@@ -6,8 +11,6 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { Button, CheckBox, Input, NavBar, RadioButton, Select } from './components';
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
 import { GENDER, HOBBIES, STATES } from './constants';
 import {
   validateConfirmPassword,
@@ -17,10 +20,13 @@ import {
   validateName,
   validatePassword,
 } from './utils/formValidation';
-import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import { showSuccessToast } from './utils/toast';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
+/**
+ * Interface defining the structure of user data.
+ */
 interface Users {
   id: string;
   fname: string;
@@ -34,11 +40,14 @@ interface Users {
   confirmPassword: string;
 }
 
+/**
+ * Main application component.
+ */
 function App() {
+  // State variables for managing form data and errors
   const [isTouched, setIsTouched] = useState(false);
   const [users, setUsers] = useState<Users[]>([]);
   const [editId, setEditId] = useState<string | undefined>();
-  // Input states
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [email, setEmail] = useState('');
@@ -48,8 +57,6 @@ function App() {
   const [hobbies, setHobbies] = useState<string[]>([]);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Error states
   const [fnameError, setFnameError] = useState('');
   const [lnameError, setLnameError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -58,16 +65,18 @@ function App() {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
+  /**
+   * Effect hook to validate form whenever form fields change.
+   */
   useEffect(() => {
     if (isTouched) {
       validateForm();
     }
   }, [fname, lname, email, dob, state, password, confirmPassword]);
 
-  useEffect(() => {
-    console.log('users', users);
-  }, [users]);
-
+  /**
+   * Function to reset the form fields and errors.
+   */
   const resetForm = () => {
     setIsTouched(false);
     setFname('');
@@ -89,6 +98,9 @@ function App() {
     setEditId(undefined);
   };
 
+  /**
+   * Function to validate the form fields.
+   */
   const validateForm = () => {
     const fnameErrorMsg = validateName(fname, 'First Name');
     setFnameError(fnameErrorMsg);
@@ -111,14 +123,20 @@ function App() {
         emailErrorMsg ||
         dobErrorMsg ||
         passwordErrorMsg ||
-        confirmpassErrorMsg) == ''
+        confirmpassErrorMsg) === ''
     );
   };
 
+  /**
+   * Function to generate a unique ID for a user.
+   */
   const generateUniqueId = () => {
     return Math.random().toString(36).substr(2, 9);
   };
 
+  /**
+   * Function to handle form submission.
+   */
   const onFormSubmit = () => {
     try {
       setIsTouched(true);
@@ -140,15 +158,12 @@ function App() {
         if (!!editId) {
           showSuccessToast('User details edited successfully.');
           setUsers((prevUsers) => {
-            // Find the index of the user with the given ID
             const index = prevUsers.findIndex((user) => user.id === editId);
             if (index !== -1) {
-              // Create a new array with the updated user at the found index
               const updatedUsers = [...prevUsers];
               updatedUsers[index] = { ...updatedUser };
               return updatedUsers;
             } else {
-              // If user with given ID is not found, return the previous state
               return prevUsers;
             }
           });
@@ -157,9 +172,14 @@ function App() {
           setUsers([...users, updatedUser]);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      // Handle error
+    }
   };
 
+  /**
+   * Function to delete a user.
+   */
   const deleteUser = (userId: string) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
     if (confirmDelete) {
@@ -168,6 +188,9 @@ function App() {
     }
   };
 
+  /**
+   * Function to edit user details.
+   */
   const editUser = (user: Users) => {
     setEditId(user.id);
     setFname(user.fname);
@@ -181,6 +204,9 @@ function App() {
     setConfirmPassword(user.confirmPassword);
   };
 
+  /**
+   * Function to render the form.
+   */
   const renderForm = () => (
     <div id='add-form'>
       <form id='form-container'>
@@ -311,6 +337,9 @@ function App() {
     </div>
   );
 
+  /**
+   * Function to render user details.
+   */
   const renderUserDetails = () => (
     <div id='detail-view'>
       <h4>User List:</h4>
@@ -357,11 +386,13 @@ function App() {
 
   return (
     <>
+      {/* Navigation bar */}
       <NavBar />
       <div className='main'>
         {renderForm()}
         {renderUserDetails()}
       </div>
+      {/* Toast notifications */}
       <ToastContainer />
     </>
   );

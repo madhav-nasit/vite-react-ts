@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import './Style.css';
-import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -13,8 +12,13 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
+/**
+ * Input component renders an input element with optional label, icon, and error message.
+ * @param {InputProps} props - Props for the Input component.
+ */
 export const Input = (props: InputProps) => {
   const { type = 'text', id, label, icon, error, required, ...rest } = props;
+
   return (
     <div>
       {!!label && (
@@ -33,7 +37,7 @@ export const Input = (props: InputProps) => {
           id={id}
           placeholder={label}
           required={required}
-          className={!!error ? 'errror-input' : ''}
+          className={!!error ? 'error-input' : ''}
           {...rest}
         />
         {!!error && <p className='error-message'>{error}</p>}

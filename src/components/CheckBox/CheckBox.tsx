@@ -8,7 +8,14 @@ interface CheckBoxProps {
   onChange?: (value: string[]) => void;
 }
 
+/**
+ * CheckBox component renders a group of checkboxes.
+ * @param {CheckBoxProps} props - Props for the CheckBox component.
+ */
 export const CheckBox: React.FC<CheckBoxProps> = ({ value, options, title, onChange }) => {
+  /**
+   * Handles the change event for the checkboxes.
+   */
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = event.target.value;
     const isChecked = event.target.checked;
@@ -21,6 +28,7 @@ export const CheckBox: React.FC<CheckBoxProps> = ({ value, options, title, onCha
     }
     if (!!onChange) onChange(tempVal);
   };
+
   return (
     <div>
       {!!title && <label>{title}</label>}

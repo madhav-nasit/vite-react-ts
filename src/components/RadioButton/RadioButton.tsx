@@ -8,6 +8,10 @@ interface RadioButtonProps {
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
+/**
+ * RadioButton component renders a group of radio buttons.
+ * @param {RadioButtonProps} props - Props for the RadioButton component.
+ */
 export const RadioButton: React.FC<RadioButtonProps> = ({ value, options, title, onChange }) => {
   return (
     <div>
